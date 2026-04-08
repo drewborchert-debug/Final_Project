@@ -21,8 +21,8 @@ public:
     int getHockeyIQ() const { return hockeyIQ; }
     int getEnergy() const { return energy; }
 
-    void trainOnIce(int sk, int sh) { skating += sk; shooting += sh; energy -= 25; }
-    void studyFilm(int iq) { hockeyIQ += iq; energy -= 15; }
+    void trainOnIce(int sk, int sh) { skating += sk; shooting += sh; energy -= 60; }
+    void studyFilm(int iq) { hockeyIQ += iq; energy -= 40; }
     
     void rest() { 
         energy = 100; 
