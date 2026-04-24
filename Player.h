@@ -50,12 +50,12 @@ public:
     }
 
     void trainOnIce(int sk, int sh) { 
-        if (energy >= 25) { skating += sk; shooting += sh; energy -= 25; }
+        if (energy >= 30) { skating += sk; shooting += sh; energy -= 30; }
         else { std::cout << "Too exhausted to train!" << std::endl; }
     }
 
     void studyFilm(int iq) { 
-        if (energy >= 15) { hockeyIQ += iq; energy -= 15; }
+        if (energy >= 20) { hockeyIQ += iq; energy -= 20; }
         else { std::cout << "Too tired for film study!" << std::endl; }
     }
 
