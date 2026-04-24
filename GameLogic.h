@@ -3,80 +3,68 @@
 
 #include "Player.h"
 #include <cstdlib>
-#include <ctime>
+#include <ctime> // For the timer logic
 
 class GameLogic {
 public:
     static void playSeasonGame(Player &p) {
-        // 1. Dynamic Difficulty: Random Goalie Rating for each game
-        // Random rating between 55 (Rookie) and 85 (Vezina Winner)
+        // --- 1. Dynamic Difficulty ---
         int goalieDifficulty = (rand() % 31) + 55; 
-
         std::cout << std::endl << "--- GAME DAY: " << p.getTeam() << " vs RIVAL ---" << std::endl;
         std::cout << "Opposing Goalie Skill Level: " << goalieDifficulty << std::endl;
 
-    // 2. The Continuous Fight Factor (15% Chance)
-    if ((rand() % 100) < 15) {
-        std::cout << std::endl << "!!! DROPPING THE GLOVES: A fight has broken out! !!!" << std::endl;
-    
-        int punchesLanded = 0;
-        int targetPunches = 3; // Must land 3 punches to win
-        bool knockedOut = false;
+        // --- 2. The Reflex Fight (NEW TIMER LOGIC) ---
+        if ((rand() % 100) < 15) {
+            std::cout << std::endl << "!!! DROPPING THE GLOVES: Fight! !!!" << std::endl;
+            
+            int punchesLanded = 0;
+            int targetPunches = 3;
+            bool knockedOut = false;
+            char keys[4] = {'a', 's', 'd', 'f'};
 
-        while (punchesLanded < targetPunches && !knockedOut) {
-            std::cout << "Punches landed: " << punchesLanded << "/" << targetPunches << std::endl;
-            std::cout << "Type 'f' to PUNCH! (Anything else and you get countered): ";
-        
-            char fightInput;
-            std::cin >> fightInput;
+            while (punchesLanded < targetPunches && !knockedOut) {
+                char targetKey = keys[rand() % 4];
+                std::cout << "PUNCH " << (punchesLanded + 1) << "! Type '" << targetKey << "' FAST!" << std::endl;
 
-        if (fightInput == 'f' || fightInput == 'F') {
-            punchesLanded++;
-            std::cout << "DIRECT HIT!" << std::endl;
-        } else {
-            std::cout << "MISS! You got countered!" << std::endl;
-            knockedOut = true; // Fight ends if you miss
-        }
-    }
+                time_t startTime = time(0); 
+                char userInput;
+                std::cin >> userInput;
+                time_t endTime = time(0); 
 
-        if (punchesLanded == targetPunches) {
-            std::cout << "KNOCKOUT! You won the fight and the crowd is going wild!" << std::endl;
-            p.addFightWin();
-        } else {
-            std::cout << "You've been sent to the penalty box after taking a tough hit." << std::endl;
-        }
-    
-        std::cout << std::endl;
-    }
+                double timeTaken = difftime(endTime, startTime);
 
-        // 3. Match Simulation Logic
-        // Calculate performance based on your attributes
-        int skillAverage = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
-        
-        // Fatigue Penalty: If energy is low, performance drops
-        if (p.getEnergy() < 30) {
-            skillAverage -= 15;
-            std::cout << "[NOTICE] You look sluggish out there due to low energy." << std::endl;
+                if (userInput == targetKey && timeTaken <= 2.0) { // Giving 2 seconds for terminal lag
+                    punchesLanded++;
+                    std::cout << "BOOM! Landed in " << timeTaken << " seconds." << std::endl;
+                } else {
+                    if (timeTaken > 2.0) std::cout << "TOO SLOW! You got rocked." << std::endl;
+                    else std::cout << "WHIFF! Wrong key!" << std::endl;
+                    knockedOut = true;
+                }
+            }
+
+            if (punchesLanded == targetPunches) {
+                std::cout << "KNOCKOUT! You won the fight!" << std::endl;
+                p.addFightWin();
+            } else {
+                std::cout << "You're heading to the box with a black eye." << std::endl;
+            }
         }
 
-        int puckLuck = (rand() % 21) - 10; // Random factor between -10 and 10
-        int performanceScore = skillAverage + puckLuck;
+        // --- 3. The Match Sim ---
+        int skillAvg = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
+        int performance = skillAvg + ((rand() % 21) - 10);
 
-        // Determine if a goal was scored
-        if (performanceScore >= goalieDifficulty) {
-            std::cout << "HE SCORES!! A beautiful snipe into the top shelf!" << std::endl;
+        if (performance >= goalieDifficulty) {
+            std::cout << "GOAL! Top shelf where mom hides the cookies!" << std::endl;
             p.addGoal();
         } else {
-            std::cout << "Great save! You couldn't beat the goalie this time." << std::endl;
+            std::cout << "Glove save! No goal." << std::endl;
         }
 
-        // 4. Feature: Passive Skill Gain (Gain XP even if you lose)
+        // --- 4. Progression ---
         p.gainExperience();
-
-        // 5. Advance the Season Calendar
         p.nextGame();
-        
-        std::cout << "--- Game Over ---" << std::endl;
     }
 };
 
