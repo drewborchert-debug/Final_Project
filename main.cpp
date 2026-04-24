@@ -4,29 +4,44 @@
 #include "GameLogic.h"
 
 int main() {
-    srand(time(0)); // Important: This makes the random numbers actually random
+    srand(time(0));
     
-    std::cout << "Enter Player Name: ";
+    std::cout << "--- NHL MYPLAYER: ROAD TO THE CHAMPIONSHIP ---" << std::endl;
+    std::cout << "Enter your Prospect's Name: ";
     std::string name;
     std::getline(std::cin, name);
 
-    std::cout << "Enter NHL Team: ";
+    std::cout << "Enter your NHL Team: ";
     std::string team;
     std::getline(std::cin, team);
 
-    Player p(name, team);
+    Player player(name, team);
 
-    while (p.getGameNum() <= 20) {
-        p.displaySeasonStats();
-        std::cout << "1. Train | 2. Film | 3. PLAY GAME | 4. Rest | 5. Quit" << std::endl;
+    while (player.getGameNum() <= 20) {
+        player.displaySeasonStats();
+        std::cout << "WHAT IS THE PLAN FOR TODAY?" << std::endl;
+        std::cout << "1. Power Skating & Shooting (+Stats, -Energy)" << std::endl;
+        std::cout << "2. Video Review (+IQ, -Energy)" << std::endl;
+        std::cout << "3. PLAY UPCOMING GAME" << std::endl;
+        std::cout << "4. Rest & Recovery" << std::endl;
+        std::cout << "5. Retire (Quit Game)" << std::endl;
+        std::cout << "Selection: ";
+        
         int choice;
         std::cin >> choice;
 
-        if (choice == 3) GameLogic::playSeasonGame(p);
-        else if (choice == 1) p.trainOnIce(3, 2);
-        else if (choice == 2) p.studyFilm(4);
-        else if (choice == 4) p.rest();
+        if (choice == 3) GameLogic::playSeasonGame(player);
+        else if (choice == 1) player.trainOnIce(4, 3);
+        else if (choice == 2) player.studyFilm(5);
+        else if (choice == 4) player.rest();
         else if (choice == 5) break;
+        else std::cout << "Invalid choice. The coach is staring at you." << std::endl;
+
+        if (player.getGameNum() > 20) {
+            std::cout << std::endl << "=== SEASON OVER ===" << std::endl;
+            player.displaySeasonStats();
+            std::cout << "Thanks for playing, Rookie!" << std::endl;
+        }
     }
 
     return 0;

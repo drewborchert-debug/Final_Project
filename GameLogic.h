@@ -3,20 +3,19 @@
 
 #include "Player.h"
 #include <cstdlib>
-#include <ctime> // For the timer logic
+#include <ctime>
 
 class GameLogic {
 public:
     static void playSeasonGame(Player &p) {
-        // --- 1. Dynamic Difficulty ---
+        // 1. Dynamic Difficulty
         int goalieDifficulty = (rand() % 31) + 55; 
-        std::cout << std::endl << "--- GAME DAY: " << p.getTeam() << " vs RIVAL ---" << std::endl;
-        std::cout << "Opposing Goalie Skill Level: " << goalieDifficulty << std::endl;
+        std::cout << std::endl << "MATCHUP: " << p.getTeam() << " vs " << p.getNextOpponent() << std::endl;
+        std::cout << "Scouting Report: Opposing Goalie is rated " << goalieDifficulty << std::endl;
 
-        // --- 2. The Reflex Fight (NEW TIMER LOGIC) ---
+        // 2. Continuous Reflex Fight (15% Chance)
         if ((rand() % 100) < 15) {
-            std::cout << std::endl << "!!! DROPPING THE GLOVES: Fight! !!!" << std::endl;
-            
+            std::cout << std::endl << "!!! CHIRP ALERT: A fight has broken out! !!!" << std::endl;
             int punchesLanded = 0;
             int targetPunches = 3;
             bool knockedOut = false;
@@ -24,45 +23,43 @@ public:
 
             while (punchesLanded < targetPunches && !knockedOut) {
                 char targetKey = keys[rand() % 4];
-                std::cout << "PUNCH " << (punchesLanded + 1) << "! Type '" << targetKey << "' FAST!" << std::endl;
+                std::cout << "LAND PUNCH " << (punchesLanded + 1) << "! Hit '" << targetKey << "' quickly!" << std::endl;
 
-                time_t startTime = time(0); 
+                time_t startTime = time(0);
                 char userInput;
                 std::cin >> userInput;
-                time_t endTime = time(0); 
+                time_t endTime = time(0);
 
-                double timeTaken = difftime(endTime, startTime);
-
-                if (userInput == targetKey && timeTaken <= 2.0) { // Giving 2 seconds for terminal lag
+                if (userInput == targetKey && difftime(endTime, startTime) <= 2.0) {
                     punchesLanded++;
-                    std::cout << "BOOM! Landed in " << timeTaken << " seconds." << std::endl;
+                    std::cout << "CLEAN HIT!" << std::endl;
                 } else {
-                    if (timeTaken > 2.0) std::cout << "TOO SLOW! You got rocked." << std::endl;
-                    else std::cout << "WHIFF! Wrong key!" << std::endl;
+                    std::cout << "COUNTERED! You took a heavy right hook." << std::endl;
                     knockedOut = true;
                 }
             }
 
             if (punchesLanded == targetPunches) {
-                std::cout << "KNOCKOUT! You won the fight!" << std::endl;
+                std::cout << "VICTORY: You won the fight! Momentum is yours." << std::endl;
                 p.addFightWin();
-            } else {
-                std::cout << "You're heading to the box with a black eye." << std::endl;
-            }
+            } else { std::cout << "DEFEAT: You're headed to the trainer's room." << std::endl; }
         }
 
-        // --- 3. The Match Sim ---
-        int skillAvg = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
-        int performance = skillAvg + ((rand() % 21) - 10);
+        // 3. Match Simulation
+        int performance = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
+        if (p.getEnergy() < 30) performance -= 15;
+        
+        int result = performance + ((rand() % 21) - 10);
 
-        if (performance >= goalieDifficulty) {
-            std::cout << "GOAL! Top shelf where mom hides the cookies!" << std::endl;
+        if (result >= goalieDifficulty) {
+            std::cout << "GOAL!! You scored the game winner!" << std::endl;
             p.addGoal();
+            p.addWin();
         } else {
-            std::cout << "Glove save! No goal." << std::endl;
+            std::cout << "Loss. You were shut out today." << std::endl;
+            p.addLoss();
         }
 
-        // --- 4. Progression ---
         p.gainExperience();
         p.nextGame();
     }
