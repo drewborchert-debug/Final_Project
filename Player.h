@@ -7,35 +7,67 @@
 class Player {
 private:
     std::string name;
-    int skating;
-    int shooting;
-    int hockeyIQ;
-    int energy;
+    std::string nhlTeam;
+    int skating, shooting, hockeyIQ, energy;
+    
+    int goals;
+    int fightsWon;
+    int seasonGameCount;
 
 public:
-    Player(std::string n) : name(n), skating(50), shooting(50), hockeyIQ(50), energy(100) {}
+    Player(std::string n, std::string team) 
+        : name(n), nhlTeam(team), skating(50), shooting(50), hockeyIQ(50), energy(100), 
+          goals(0), fightsWon(0), seasonGameCount(1) {}
 
-    std::string getName() const { return name; }
+    // --- The 4 Getters required by GameLogic ---
     int getSkating() const { return skating; }
     int getShooting() const { return shooting; }
     int getHockeyIQ() const { return hockeyIQ; }
     int getEnergy() const { return energy; }
 
-    void trainOnIce(int sk, int sh) { skating += sk; shooting += sh; energy -= 60; }
-    void studyFilm(int iq) { hockeyIQ += iq; energy -= 40; }
+    // --- Other Getters & Setters ---
+    std::string getTeam() const { return nhlTeam; }
+    int getGameNum() const { return seasonGameCount; }
+    void nextGame() { seasonGameCount++; }
     
-    void rest() { 
-        energy = 100; 
-        std::cout << std::endl << "[Rest] " << name << " hit the cold tub and recovered energy!" << std::endl; 
+    void gainExperience() {
+        skating += 1;
+        shooting += 1;
+        std::cout << "[XP] Game experience gained: +1 Skating, +1 Shooting!" << std::endl;
     }
 
-    void displayStats() {
-        std::cout << std::endl << "========= " << name << "'s PRO CARD =========" << std::endl;
-        std::cout << " Skating:   [" << skating << "]" << std::endl;
-        std::cout << " Shooting:  [" << shooting << "]" << std::endl;
-        std::cout << " Hockey IQ: [" << hockeyIQ << "]" << std::endl;
-        std::cout << " Energy:    " << energy << "%" << std::endl;
-        std::cout << "====================================" << std::endl;
+    void addGoal() { goals++; }
+    void addFightWin() { fightsWon++; }
+    
+    void trainOnIce(int sk, int sh) { 
+        if (energy >= 25) {
+            skating += sk; 
+            shooting += sh; 
+            energy -= 25; 
+        } else {
+            std::cout << "Too tired to train!" << std::endl;
+        }
+    }
+
+    void studyFilm(int iq) { 
+        if (energy >= 15) {
+            hockeyIQ += iq; 
+            energy -= 15; 
+        } else {
+            std::cout << "Too tired to study!" << std::endl;
+        }
+    }
+
+    void rest() { 
+        energy = 100; 
+        std::cout << "[REST] Energy fully restored!" << std::endl;
+    }
+    
+    void displaySeasonStats() {
+        std::cout << std::endl << "--- " << nhlTeam << " ROSTER: " << name << " ---" << std::endl;
+        std::cout << " Game: " << seasonGameCount << "/20 | Goals: " << goals << " | Fights Won: " << fightsWon << std::endl;
+        std::cout << " Stats -> SKT: " << skating << " | SHT: " << shooting << " | IQ: " << hockeyIQ << std::endl;
+        std::cout << " Energy: " << energy << "%" << std::endl;
     }
 };
 
