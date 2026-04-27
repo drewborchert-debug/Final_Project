@@ -11,8 +11,6 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    ../GameLogic.h \
-    ../Player.h \
     GameLogic.h \
     Player.h \
     mainwindow.h

@@ -306,9 +306,7 @@ DIST          = ../6.11.0/macos/mkspecs/features/spec_pre.prf \
 		../6.11.0/macos/mkspecs/features/exceptions.prf \
 		../6.11.0/macos/mkspecs/features/yacc.prf \
 		../6.11.0/macos/mkspecs/features/lex.prf \
-		HockeySim_GUI.pro ../GameLogic.h \
-		../Player.h \
-		GameLogic.h \
+		HockeySim_GUI.pro GameLogic.h \
 		Player.h \
 		mainwindow.h main.cpp \
 		mainwindow.cpp
@@ -867,7 +865,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../GameLogic.h ../Player.h GameLogic.h Player.h mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents GameLogic.h Player.h mainwindow.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 

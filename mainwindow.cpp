@@ -70,11 +70,29 @@ void MainWindow::on_btn_game_clicked()
 
         if (myPlayer->getWins() >= 14) {
             ui->txt_log->appendPlainText("--- PLAYOFFS ---");
+
+            // 1. QUARTERFINALS
             if ((rand() % 100) < 50) {
                 ui->txt_log->appendPlainText("Quarterfinals: WIN! Advancing...");
-                if ((rand() % 100) < 50) ui->txt_log->appendPlainText("FINALS: CHAMPIONSHIP WON!");
-                else ui->txt_log->appendPlainText("FINALS: Lost in overtime.");
-            } else ui->txt_log->appendPlainText("Quarterfinals: Eliminated.");
+
+                // 2. SEMIFINALS (The missing piece!)
+                if ((rand() % 100) < 50) {
+                    ui->txt_log->appendPlainText("Semifinals: WIN! Heading to the Ship...");
+
+                    // 3. FINALS
+                    if ((rand() % 100) < 50) {
+                        ui->txt_log->appendPlainText("FINALS: CHAMPIONSHIP WON!");
+                    } else {
+                        ui->txt_log->appendPlainText("FINALS: Lost in overtime.");
+                    }
+
+                } else {
+                    ui->txt_log->appendPlainText("Semifinals: Eliminated.");
+                }
+
+            } else {
+                ui->txt_log->appendPlainText("Quarterfinals: Eliminated.");
+            }
         } else {
             ui->txt_log->appendPlainText("Season Over. Missed Playoffs (Need 14 wins).");
         }
