@@ -4,64 +4,49 @@
 #include "Player.h"
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 class GameLogic {
 public:
-    static void playSeasonGame(Player &p) {
+    static std::string playSeasonGame(Player &p) {
+        std::string report = ""; // This holds everything we want to show in the UI
+
         // 1. Dynamic Difficulty
-        int goalieDifficulty = (rand() % 31) + 55; 
-        std::cout << std::endl << "MATCHUP: " << p.getTeam() << " vs " << p.getNextOpponent() << std::endl;
-        std::cout << "Scouting Report: Opposing Goalie is rated " << goalieDifficulty << std::endl;
+        int goalieDifficulty = (rand() % 20) + 55 + (p.getGameNum());
+        report += "MATCHUP: " + p.getTeam() + " vs " + p.getNextOpponent() + "\n";
+        report += "Opposing Goalie Rating: " + std::to_string(goalieDifficulty) + "\n";
 
-        // 2. Continuous Reflex Fight (15% Chance)
+        // 2. Simplified Fight Logic for GUI
+        // We skip std::cin to prevent crashing. 15% chance to win a fight automatically.
         if ((rand() % 100) < 15) {
-            std::cout << std::endl << "!!! CHIRP ALERT: A fight has broken out! !!!" << std::endl;
-            int punchesLanded = 0;
-            int targetPunches = 3;
-            bool knockedOut = false;
-            char keys[4] = {'a', 's', 'd', 'f'};
-
-            while (punchesLanded < targetPunches && !knockedOut) {
-                char targetKey = keys[rand() % 4];
-                std::cout << "LAND PUNCH " << (punchesLanded + 1) << "! Hit '" << targetKey << "' quickly!" << std::endl;
-
-                time_t startTime = time(0);
-                char userInput;
-                std::cin >> userInput;
-                time_t endTime = time(0);
-
-                if (userInput == targetKey && difftime(endTime, startTime) <= 2.0) {
-                    punchesLanded++;
-                    std::cout << "CLEAN HIT!" << std::endl;
-                } else {
-                    std::cout << "COUNTERED! You took a heavy right hook." << std::endl;
-                    knockedOut = true;
-                }
-            }
-
-            if (punchesLanded == targetPunches) {
-                std::cout << "VICTORY: You won the fight! Momentum is yours." << std::endl;
+            report += "!!! A fight broke out on the ice! !!!\n";
+            if ((rand() % 2) == 0) {
+                report += "VICTORY: You won the scrap! Momentum up.\n";
                 p.addFightWin();
-            } else { std::cout << "DEFEAT: You're headed to the trainer's room." << std::endl; }
+            } else {
+                report += "DEFEAT: You took a heavy right hook.\n";
+            }
         }
 
         // 3. Match Simulation
         int performance = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
         if (p.getEnergy() < 30) performance -= 15;
-        
+
         int result = performance + ((rand() % 21) - 10);
 
         if (result >= goalieDifficulty) {
-            std::cout << "GOAL!! You scored the game winner!" << std::endl;
+            report += "RESULT: GOAL!! You scored the game winner!\n";
             p.addGoal();
             p.addWin();
         } else {
-            std::cout << "Loss. You were shut out today." << std::endl;
+            report += "RESULT: Loss. You were shut out today.\n";
             p.addLoss();
         }
 
         p.gainExperience();
         p.nextGame();
+
+        return report; // THIS fixes the conversion error
     }
 };
 

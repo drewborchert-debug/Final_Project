@@ -31,6 +31,11 @@ public:
     int getHockeyIQ() const { return hockeyIQ; }
     int getEnergy() const { return energy; }
     int getGameNum() const { return seasonGameCount; }
+    int getWins() const { return wins; }
+    int getLosses() const { return losses; }
+    int getGoals() const { return goals; }
+    int getFightsWon() const { return fightsWon; }
+    std::string getName() const { return name; }
     std::string getTeam() const { return nhlTeam; }
     std::string getNextOpponent() const { 
         return (seasonGameCount <= 20) ? opponents[seasonGameCount - 1] : "Playoffs"; 
@@ -50,12 +55,12 @@ public:
     }
 
     void trainOnIce(int sk, int sh) { 
-        if (energy >= 30) { skating += sk; shooting += sh; energy -= 30; }
+        if (energy >= 60) { skating += sk; shooting += sh; energy -= 60; }
         else { std::cout << "Too exhausted to train!" << std::endl; }
     }
 
     void studyFilm(int iq) { 
-        if (energy >= 20) { hockeyIQ += iq; energy -= 20; }
+        if (energy >= 40) { hockeyIQ += iq; energy -= 40; }
         else { std::cout << "Too tired for film study!" << std::endl; }
     }
 
