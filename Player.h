@@ -73,6 +73,7 @@ public:
         std::cout << "Career -> Goals: " << goals << " | Fights Won: " << fightsWon << " | Energy: " << energy << "%" << std::endl;
         std::cout << "----------------------------------------------------" << std::endl;
     }
+
 };
 
 #endif

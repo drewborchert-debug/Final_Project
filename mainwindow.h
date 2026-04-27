@@ -28,6 +28,9 @@ private slots:
 
     void on_btn_rest_clicked();
 
+    void on_btn_exit_clicked();
+
+
 private:
     Ui::MainWindow *ui;
     Player *myPlayer;

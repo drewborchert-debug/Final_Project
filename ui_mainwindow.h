@@ -34,6 +34,7 @@ public:
     QLabel *label;
     QPushButton *btn_film;
     QLabel *lbl_stats;
+    QPushButton *btn_exit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -46,32 +47,35 @@ public:
         centralwidget->setObjectName("centralwidget");
         bar_energy = new QProgressBar(centralwidget);
         bar_energy->setObjectName("bar_energy");
-        bar_energy->setGeometry(QRect(20, 40, 141, 21));
+        bar_energy->setGeometry(QRect(10, 180, 141, 21));
         bar_energy->setValue(100);
         btn_game = new QPushButton(centralwidget);
         btn_game->setObjectName("btn_game");
-        btn_game->setGeometry(QRect(10, 200, 151, 32));
+        btn_game->setGeometry(QRect(10, 220, 151, 32));
         btn_train = new QPushButton(centralwidget);
         btn_train->setObjectName("btn_train");
-        btn_train->setGeometry(QRect(10, 240, 151, 32));
+        btn_train->setGeometry(QRect(10, 260, 151, 32));
         btn_rest = new QPushButton(centralwidget);
         btn_rest->setObjectName("btn_rest");
-        btn_rest->setGeometry(QRect(20, 320, 121, 32));
+        btn_rest->setGeometry(QRect(20, 350, 121, 32));
         txt_log = new QPlainTextEdit(centralwidget);
         txt_log->setObjectName("txt_log");
-        txt_log->setGeometry(QRect(170, 70, 291, 441));
+        txt_log->setGeometry(QRect(240, 70, 431, 441));
         txt_log->setStyleSheet(QString::fromUtf8(""));
         txt_log->setReadOnly(true);
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        label->setGeometry(QRect(150, 0, 271, 16));
+        label->setGeometry(QRect(260, 10, 271, 16));
         btn_film = new QPushButton(centralwidget);
         btn_film->setObjectName("btn_film");
-        btn_film->setGeometry(QRect(30, 280, 101, 32));
+        btn_film->setGeometry(QRect(30, 300, 101, 32));
         lbl_stats = new QLabel(centralwidget);
         lbl_stats->setObjectName("lbl_stats");
-        lbl_stats->setGeometry(QRect(30, 80, 121, 111));
+        lbl_stats->setGeometry(QRect(20, 50, 121, 111));
         lbl_stats->setWordWrap(true);
+        btn_exit = new QPushButton(centralwidget);
+        btn_exit->setObjectName("btn_exit");
+        btn_exit->setGeometry(QRect(10, 430, 100, 32));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -96,6 +100,7 @@ public:
         label->setText(QCoreApplication::translate("MainWindow", "NHL MyPlayer: Road to the Championship", nullptr));
         btn_film->setText(QCoreApplication::translate("MainWindow", "Film Study", nullptr));
         lbl_stats->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        btn_exit->setText(QCoreApplication::translate("MainWindow", "Exit", nullptr));
     } // retranslateUi
 
 };

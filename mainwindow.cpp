@@ -167,8 +167,8 @@ void MainWindow::on_btn_game_clicked()
 void MainWindow::on_btn_train_clicked()
 {
     if (myPlayer->getEnergy() >= 60) {
-        myPlayer->trainOnIce(5, 3);
-        ui->txt_log->appendPlainText("[TRAIN] +5 Skating, +3 Shooting. Energy -60.");
+        myPlayer->trainOnIce(2, 2);
+        ui->txt_log->appendPlainText("[TRAIN] +2 Skating, +2 Shooting. Energy -60.");
     } else {
         ui->txt_log->appendPlainText("[!] Too exhausted to train! Hit the training room (REST).");
     }
@@ -187,12 +187,20 @@ void MainWindow::on_btn_rest_clicked()
 void MainWindow::on_btn_film_clicked()
 {
     if (myPlayer->getEnergy() >= 40) {
-        myPlayer->studyFilm(5);
-        ui->txt_log->appendPlainText("[FILM] Studied positioning. +5 IQ. Energy -40.");
+        myPlayer->studyFilm(2);
+        ui->txt_log->appendPlainText("[FILM] Studied positioning. +2 IQ. Energy -40.");
     } else {
         ui->txt_log->appendPlainText("[!] Too tired for film study! You need recovery.");
     }
     updateDashboard();
 }
+
+
+
+void MainWindow::on_btn_exit_clicked()
+{
+    QApplication::quit();
+}
+
 
 
