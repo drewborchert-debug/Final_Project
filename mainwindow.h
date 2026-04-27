@@ -34,6 +34,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Player *myPlayer;
+    int trainingClicks = 0;
     void updateDashboard();
 };
 #endif // MAINWINDOW_H

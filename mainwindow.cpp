@@ -150,6 +150,10 @@ void MainWindow::on_btn_game_clicked()
     // D) RUN THE GAME
     std::string report = GameLogic::playSeasonGame(*myPlayer);
 
+    ui->btn_game->setEnabled(false);
+    ui->btn_train->setEnabled(true);
+    trainingClicks = 0;
+
     // 1. Add a break
     ui->txt_log->appendHtml("<br><hr style='border: 1px dashed #555;'><br>");
 
@@ -169,6 +173,15 @@ void MainWindow::on_btn_train_clicked()
     if (myPlayer->getEnergy() >= 60) {
         myPlayer->trainOnIce(2, 2);
         ui->txt_log->appendPlainText("[TRAIN] +2 Skating, +2 Shooting. Energy -60.");
+        trainingClicks++;
+
+        ui->btn_game->setEnabled(true);
+
+        if (trainingClicks >= 3) {
+            ui->btn_train->setEnabled(false);
+            ui->txt_log->appendPlainText("[!] Max training reached for this game shift.");
+        }
+
     } else {
         ui->txt_log->appendPlainText("[!] Too exhausted to train! Hit the training room (REST).");
     }

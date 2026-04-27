@@ -49,18 +49,25 @@ public:
     void nextGame() { seasonGameCount++; }
     
     void gainExperience() {
-        skating += 1;
-        shooting += 1;
-        std::cout << "[XP] Post-game development: +1 Skating, +1 Shooting!" << std::endl;
+        skating = std::min(100, skating + 1);
+        shooting = std::min(100, shooting +1);
     }
 
-    void trainOnIce(int sk, int sh) { 
-        if (energy >= 60) { skating += sk; shooting += sh; energy -= 60; }
+    void trainOnIce(int sk, int sh) {
+
+        if (energy >= 60) {
+            skating = std::min(100, skating + sk);
+            shooting = std::min(100, shooting + sh);
+            energy -= 60;
+        }
         else { std::cout << "Too exhausted to train!" << std::endl; }
     }
 
-    void studyFilm(int iq) { 
-        if (energy >= 40) { hockeyIQ += iq; energy -= 40; }
+    void studyFilm(int iq) {
+        if (energy >= 40) {
+            hockeyIQ = std::min(100, hockeyIQ + iq);
+            energy -= 40;
+        }
         else { std::cout << "Too tired for film study!" << std::endl; }
     }
 
