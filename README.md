@@ -25,6 +25,16 @@ Branching Decision System: Post-game prompts offer "Active Choices" (Recovery vs
 
 Qt Dashboard (GUI): A custom graphical interface built with the Qt Framework, replacing terminal-based play with a visual dashboard featuring live stat counters and a dynamic 20-game season calendar.
 
+## Change logs for overall project 
+![April 8th log](image.png)  
+- Made the game accessable and run through VSCode, knowing what we have to do in advance.  
+- April 15th, Started to work with QT Creator and GUI.  
+![April 24th log](image-1.png)  
+- Has users test final project.   
+![April 27th Log](image-2.png)  
+- Final implenmentations and change to GUI from using QT Creator as final place to XQuartz as final spot where menu drops.  
+
+
 
 ## How to Compile and Run
 This program uses a Graphical User Interface (GUI). If you are running this on a Mac or Windows machine via the University of Richmond CS Cluster, you must set up an X11 Server to allow the program window to appear on your local screen.
