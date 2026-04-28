@@ -1,3 +1,8 @@
+Open Vscode
+- Press F1 and select "Remote-SSN: Connect to host" 
+- type in the following 
+
+
 git clone https://github.com/drewborchert-debug/Final_Project.git
 cd Final_Project
 

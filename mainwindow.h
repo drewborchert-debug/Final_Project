@@ -33,6 +33,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    void handlePostGameDecision();
+    void showCoachesAdvice();
     Player *myPlayer;
     int trainingClicks = 0;
     void updateDashboard();

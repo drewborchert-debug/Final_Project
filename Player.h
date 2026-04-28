@@ -29,6 +29,10 @@ public:
     int getSkating() const { return skating; }
     int getShooting() const { return shooting; }
     int getHockeyIQ() const { return hockeyIQ; }
+    void setHockeyIQ(int val) { hockeyIQ = val; }
+    void setShooting(int val) { shooting = val; }
+    void setSkating(int val) { skating = val; }
+    void setEnergy(int val) { energy = val; }
     int getEnergy() const { return energy; }
     int getGameNum() const { return seasonGameCount; }
     int getWins() const { return wins; }

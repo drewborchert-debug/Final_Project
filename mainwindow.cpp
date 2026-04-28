@@ -4,6 +4,8 @@
 #include "GameLogic.h"
 #include <QInputDialog>
 #include <QTimer>
+#include <QMessageBox>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -164,7 +166,12 @@ void MainWindow::on_btn_game_clicked()
     // 3. Add a small divider at the bottom of the result
     ui->txt_log->appendHtml("<font color='#888'>--------------------------</font>");
 
+    myPlayer->setEnergy(0);
+
     updateDashboard();
+
+    showCoachesAdvice();
+    handlePostGameDecision();
 }
 
 
@@ -208,6 +215,45 @@ void MainWindow::on_btn_film_clicked()
     updateDashboard();
 }
 
+void MainWindow::showCoachesAdvice() {
+    // 1. Identify the weak link
+    int s = myPlayer->getSkating();
+    int i = myPlayer->getHockeyIQ();
+    int str = myPlayer->getShooting(); // Or Strength if you have a getStrength()
+
+    QString weakStat;
+    if (s <= i && s <= str) weakStat = "Skating";
+    else if (i <= s && i <= str) weakStat = "Hockey IQ";
+    else weakStat = "Shooting/Strength";
+
+    // 2. Show the pop-up
+    QMessageBox::information(this, "Coach's Office", 
+        "Coach walks over: 'Your " + weakStat + " is looking like your weakest link. Get to work!'");
+}
+
+void MainWindow::handlePostGameDecision() {
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Post-Game Activity");
+    msgBox.setText("The game is over. How will you spend your night?");
+
+    // 3. Define the choices
+    QPushButton *barBtn = msgBox.addButton("Head to the bar and watch over the game. (+1 IQ / -1 Shooting)", QMessageBox::ActionRole);
+    QPushButton *skateBtn = msgBox.addButton("Stay in the rink and run some sprints. (+1 Skating)", QMessageBox::ActionRole);
+    QPushButton *restBtn = msgBox.addButton("Recovery Mode. (+1 Health/Energy)", QMessageBox::ActionRole);
+
+    msgBox.exec(); 
+
+    if (msgBox.clickedButton() == barBtn) {
+        myPlayer->setHockeyIQ(myPlayer->getHockeyIQ() + 1);
+        myPlayer->setShooting(myPlayer->getShooting() - 1);
+    } else if (msgBox.clickedButton() == skateBtn) {
+        myPlayer->setSkating(myPlayer->getSkating() + 1);
+    } else if (msgBox.clickedButton() == restBtn) {
+        myPlayer->rest(); // Using your existing rest function
+    }
+
+    updateDashboard(); 
+}
 
 
 void MainWindow::on_btn_exit_clicked()
