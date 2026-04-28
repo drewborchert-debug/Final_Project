@@ -61,7 +61,7 @@ echo "QT += widgets" >> Final_Project.pro
 qmake  
 make  
 
-* If this does not work you can also call a clean: 
+* If this does not work you can also call a clean:   
 make clean  
 qmake -project  
 qmake Final_Project.pro  
