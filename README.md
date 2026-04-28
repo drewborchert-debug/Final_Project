@@ -61,5 +61,10 @@ echo "QT += widgets" >> Final_Project.pro
 qmake  
 make  
 
+Here you may have to switch terminals from using VSCode to your overall terminal on your device.  
+Then log in again to ssh -Y username@cs01.richmond.edu  
+cd to where the final project is located.  
+
+
 4. Run (This may need a new terminal to reset)  
 ./Final_Project
