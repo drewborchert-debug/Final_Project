@@ -68,3 +68,10 @@ cd to where the final project is located.
 
 4. Run (This may need a new terminal to reset)  
 ./Final_Project
+
+
+## Rescourse Logs
+![Image 1](image-3.png)
+![Image 2](image-4.png)
+![Image 3](image-5.png)
+![Image 4](image-6.png)
