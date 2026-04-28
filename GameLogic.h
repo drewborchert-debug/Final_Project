@@ -9,15 +9,15 @@
 class GameLogic {
 public:
     static std::string playSeasonGame(Player &p) {
-        std::string report = ""; // This holds everything we want to show in the UI
+        std::string report = "";
 
-        // 1. Dynamic Difficulty
+        //Dynamic Difficulty
         int goalieDifficulty = (rand() % 20) + 55 + (p.getGameNum());
         report += "MATCHUP: " + p.getTeam() + " vs " + p.getNextOpponent() + "\n";
         report += "Opposing Goalie Rating: " + std::to_string(goalieDifficulty) + "\n";
 
-        // 2. Simplified Fight Logic for GUI
-        // We skip std::cin to prevent crashing. 15% chance to win a fight automatically.
+        // Fight Logic for GUI
+        // 15% chance to win a fight automatically.
         if ((rand() % 100) < 15) {
             report += "!!! A fight broke out on the ice! !!!\n";
             if ((rand() % 2) == 0) {
@@ -28,7 +28,7 @@ public:
             }
         }
 
-        // 3. Match Simulation
+        // Match Simulation
         int performance = (p.getSkating() + p.getShooting() + p.getHockeyIQ()) / 3;
         if (p.getEnergy() < 30) performance -= 15;
 
@@ -46,7 +46,7 @@ public:
         p.gainExperience();
         p.nextGame();
 
-        return report; // THIS fixes the conversion error
+        return report;
     }
 };
 

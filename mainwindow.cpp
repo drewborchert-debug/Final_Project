@@ -28,10 +28,10 @@ MainWindow::~MainWindow() {
 
 
 void MainWindow::updateDashboard() {
-    // 1. Progress Bar for Energy
+    // Progress Bar for Energy
     ui->bar_energy->setValue(myPlayer->getEnergy());
 
-    // 2. LIVE NUMBERS
+    // Live Numbers
     QString stats = QString(
                         "SKT: %1 | SHT: %2 | IQ: %3\n"
                         "Goals: %4 | Fights: %5\n"
@@ -63,7 +63,7 @@ void MainWindow::on_btn_game_clicked()
         QApplication::quit();
         return;
     }
-    // A) THE END OF SEASON / PLAYOFF LOGIC
+    // End of a Season/Playoffs
     if (myPlayer->getGameNum() > 20) {
 
         ui->btn_train->setEnabled(false);
@@ -73,15 +73,15 @@ void MainWindow::on_btn_game_clicked()
         if (myPlayer->getWins() >= 14) {
             ui->txt_log->appendPlainText("--- PLAYOFFS ---");
 
-            // 1. QUARTERFINALS
+            // 1. Quarterfinals
             if ((rand() % 100) < 50) {
                 ui->txt_log->appendPlainText("Quarterfinals: WIN! Advancing...");
 
-                // 2. SEMIFINALS (The missing piece!)
+                // 2. Semifinals
                 if ((rand() % 100) < 50) {
                     ui->txt_log->appendPlainText("Semifinals: WIN! Heading to the Ship...");
 
-                    // 3. FINALS
+                    // 3. Finals
                     if ((rand() % 100) < 50) {
                         ui->txt_log->appendPlainText("FINALS: CHAMPIONSHIP WON!");
                     } else {
@@ -108,13 +108,13 @@ void MainWindow::on_btn_game_clicked()
         return;
     }
 
-    // B) Energy Check
+    //Energy Check
     if (myPlayer->getEnergy() < 100) {
         ui->txt_log->appendPlainText("[!] You aren't fresh enough! REST to 100% first.");
         return;
     }
 
-    // C) INTERACTIVE FIGHT (2 seconds)
+    // Fight (user has 2 seconds to press a command)
     if ((rand() % 100) < 15) {
         ui->txt_log->appendPlainText("!!! FIGHT BREAKS OUT: GO! !!!");
 
@@ -129,7 +129,7 @@ void MainWindow::on_btn_game_clicked()
             fightDialog.setWindowTitle("COMBO " + QString::number(i + 1) + "/3");
             fightDialog.setLabelText("QUICK! Type: '" + currentTarget + "'");
 
-            // 2000ms (2 seconds) total for the prompt
+            // (2 seconds) total for the prompt
             QTimer::singleShot(2000, &fightDialog, &QWidget::close);
 
             if (fightDialog.exec() == QDialog::Accepted && fightDialog.textValue().toLower() == currentTarget) {
@@ -149,7 +149,7 @@ void MainWindow::on_btn_game_clicked()
         }
     }
 
-    // D) RUN THE GAME
+    // The Game
     std::string report = GameLogic::playSeasonGame(*myPlayer);
 
     ui->btn_game->setEnabled(false);
@@ -219,7 +219,7 @@ void MainWindow::showCoachesAdvice() {
     // 1. Identify the weak link
     int s = myPlayer->getSkating();
     int i = myPlayer->getHockeyIQ();
-    int str = myPlayer->getShooting(); // Or Strength if you have a getStrength()
+    int str = myPlayer->getShooting();
 
     QString weakStat;
     if (s <= i && s <= str) weakStat = "Skating";
