@@ -69,6 +69,9 @@ cd to where the final project is located.
 4. Run (This may need a new terminal to reset)  
 ./Final_Project
 
+## UML Diagram
+![UML Picture](image-7.png)
+
 
 ## Rescourse Logs
 ![Image 1](image-3.png)
